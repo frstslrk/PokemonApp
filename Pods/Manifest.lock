@@ -1,3 +1,18 @@
-PODFILE CHECKSUM: 8b5dafb2dead1e186e046407c0ab4465dcde8232
+PODS:
+  - SDWebImage (5.19.0):
+    - SDWebImage/Core (= 5.19.0)
+  - SDWebImage/Core (5.19.0)
+
+DEPENDENCIES:
+  - SDWebImage
+
+SPEC REPOS:
+  trunk:
+    - SDWebImage
+
+SPEC CHECKSUMS:
+  SDWebImage: 981fd7e860af070920f249fd092420006014c3eb
+
+PODFILE CHECKSUM: 945711c958e3a29520a0da2500db981edeb0fdf8
 
 COCOAPODS: 1.14.3
