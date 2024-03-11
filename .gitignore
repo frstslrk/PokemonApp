@@ -1,0 +1,9 @@
+xcuserdata/
+*.moved-aside
+*.xccheckout
+*.xcuserstate
+*.ipa
+*.dSYM.zip
+*.dSYM
+build/
+DerivedData/
