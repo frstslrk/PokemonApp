@@ -9,7 +9,7 @@ class Coordinator{
     }
     
     func start(){
-        let viewModel = PokemonListViewModel(coordinator: self)
+        let viewModel = PokemonListViewModel(networkManager: NetworkManager(), coordinator: self)
         navigationController.pushViewController(PokemonListViewController(viewModel: viewModel), animated: true)
     }
 }

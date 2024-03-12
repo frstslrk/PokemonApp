@@ -6,6 +6,7 @@ target 'PokemonApp' do
   use_frameworks!
 
   pod 'SDWebImage'
+  pod 'SnapKit'
 
   # Pods for PokemonApp
 
