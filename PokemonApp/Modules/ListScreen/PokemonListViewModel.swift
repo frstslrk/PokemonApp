@@ -11,6 +11,7 @@ protocol PokemonListViewModelDelegate : AnyObject {
 final class PokemonListViewModel: ListViewProtocol {
     private var isLoading = false
     private var networkManager: NetworkManager
+    private var coreDataManager: CoreDataManager
     private var coordinator: Coordinator
     weak var delegate: PokemonListViewModelDelegate?
     private var pages = 0
@@ -25,10 +26,12 @@ final class PokemonListViewModel: ListViewProtocol {
 
     init(
         networkManager: NetworkManager,
+        coreDataManager:CoreDataManager,
         coordinator: Coordinator
     ) {
         self.networkManager = networkManager
         self.coordinator = coordinator
+        self.coreDataManager = coreDataManager
         fetchList()
     }
     
@@ -46,6 +49,7 @@ final class PokemonListViewModel: ListViewProtocol {
                 self.pokemons.append(contentsOf: list.results)
                 self.pages += 1
             case let .failure(error):
+                self.pokemons = self.coreDataManager.getPokemonsFromList()
                 self.delegate?.showAlert(error.errorDescription ?? "Error", nil)
             }
         }
@@ -57,6 +61,11 @@ final class PokemonListViewModel: ListViewProtocol {
     
     func getPokemon(_ index: Int) -> Pokemon? {
         pokemons[safe: index]
+    }
+    
+    func navigateToPokemon(_ index: Int) {
+        guard let info = getPokemon(index) else { return }
+        coordinator.showPokemonDetails(pokemon: info)
     }
     
     func pulledDown() {

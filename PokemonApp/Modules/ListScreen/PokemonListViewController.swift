@@ -6,6 +6,7 @@ protocol ListViewProtocol {
     func pulledDown()
     func getPokemonsCount() -> Int
     func getPokemon(_ index: Int) -> Pokemon?
+    func navigateToPokemon(_ index: Int)
 }
 
 final class PokemonListViewController: UIViewController, PokemonListViewModelDelegate {
@@ -123,7 +124,7 @@ extension PokemonListViewController: UITableViewDelegate,UITableViewDataSource, 
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        //ShowPokemon
+        viewModel.navigateToPokemon(indexPath.row)
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
