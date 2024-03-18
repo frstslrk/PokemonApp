@@ -12,7 +12,7 @@ You can see cached pokemons even  if you're offline.
 
 * Offline functionality: The app saves data to a local database, allowing it to function without an internet connection.
 * List view: Displays a list of Pokemon fetched from an API.
-* Detail view: Shows detailed information about a specific Pokemon when a user taps on its name.
+* Info view: Shows detailed information about a specific Pokemon when a user taps on its name.
 * MVVM-C architecture: The app follows the Model-View-ViewModel-Coordinator (MVVM-C) design pattern for a clean and maintainable codebase.
 
 ## Getting Started
