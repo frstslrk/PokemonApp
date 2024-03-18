@@ -1,14 +1,23 @@
 import Foundation
 
+public protocol Requestable {
+
+    func request<T: Codable>(
+        _ controller: ApiController,
+        completionQueue: DispatchQueue?,
+        completion: @escaping (Result<T, NetworkError>) -> Void
+    )
+}
+
 typealias GenericDataCompletion<T> = ((_ result: Result<T, NetworkError>) -> Void)
 
-final class NetworkManager {
-    enum HTTPMethod: String {
+final public class PokemonNetworkManager: Requestable {
+    public enum HTTPMethod: String {
         case GET
         case POST
     }
     
-    func request<T: Codable>(
+    public func request<T: Codable>(
         _ controller: ApiController,
         completionQueue: DispatchQueue? = .global(),
         completion: @escaping (Result<T, NetworkError>) -> Void
@@ -46,7 +55,7 @@ final class NetworkManager {
                 do {
                     let result = try JSONDecoder().decode(T.self, from: data)
                     self.throwResultOnQueue(completionQueue: completionQueue, result: .success(result), completion: completion)
-                } catch{
+                } catch {
                     self.throwResultOnQueue(completionQueue: completionQueue, result: .failure(.invalidData(error as! DecodingError)), completion: completion)
                     return
                 }

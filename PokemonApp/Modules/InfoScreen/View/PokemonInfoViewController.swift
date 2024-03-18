@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-protocol PokemonInfoViewProtocol {
+protocol PokemonInfoViewModelProtocol {
     var delegate: PokemonInfoViewModelDelegate? { get set }
     var pokemonInfo: PokemonInfoExtended? { get }
 }
@@ -58,9 +58,9 @@ final class PokemonInfoViewController: UIViewController, PokemonInfoViewModelDel
         return label
     }()
 
-    var viewModel: PokemonInfoViewProtocol
-    
-    init(viewModel: PokemonInfoViewProtocol) {
+    var viewModel: PokemonInfoViewModelProtocol
+
+    init(viewModel: PokemonInfoViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
@@ -77,8 +77,7 @@ final class PokemonInfoViewController: UIViewController, PokemonInfoViewModelDel
     }
 
     func configure(){
-        print("DEB:Configure")
-
+        
         guard let pokemon = viewModel.pokemonInfo else { return }
 
         loader.isHidden = true

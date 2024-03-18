@@ -1,10 +1,10 @@
 import Foundation
 
-protocol ApiController {
+public protocol ApiController {
     var url: URL? { get }
     var path: String? { get }
     var query: String { get }
-    var method: NetworkManager.HTTPMethod { get }
+    var method: PokemonNetworkManager.HTTPMethod { get }
 }
 
 enum PokemonApiController {
@@ -35,7 +35,7 @@ extension PokemonApiController: ApiController {
         }
     }
     
-    var method: NetworkManager.HTTPMethod {
+    var method: PokemonNetworkManager.HTTPMethod {
         switch self {
         case .getPokemons:
             return .GET

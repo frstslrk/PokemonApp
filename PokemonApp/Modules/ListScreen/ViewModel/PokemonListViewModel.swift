@@ -8,11 +8,11 @@ protocol PokemonListViewModelDelegate : AnyObject {
     func footerIsVisible(_ value: Bool)
 }
 
-final class PokemonListViewModel: ListViewProtocol {
+final class PokemonListViewModel: PokemonListViewModelProtocol {
     private var isLoading = false
-    private var networkManager: NetworkManager
+    private var networkManager: Requestable
     private var coreDataManager: CoreDataManager
-    private var coordinator: Coordinator
+    private var coordinator: CoordinatorProtocol
     weak var delegate: PokemonListViewModelDelegate?
     private var pages = 0
     private var pokemons = [Pokemon]() {
@@ -25,9 +25,9 @@ final class PokemonListViewModel: ListViewProtocol {
     }
 
     init(
-        networkManager: NetworkManager,
-        coreDataManager:CoreDataManager,
-        coordinator: Coordinator
+        networkManager: Requestable,
+        coreDataManager: CoreDataManager,
+        coordinator: CoordinatorProtocol
     ) {
         self.networkManager = networkManager
         self.coordinator = coordinator

@@ -1,5 +1,4 @@
 import UIKit
-import CoreData
 import SDWebImage
 
 protocol PokemonInfoViewModelDelegate : AnyObject{
@@ -7,9 +6,9 @@ protocol PokemonInfoViewModelDelegate : AnyObject{
     func showAlert(_ title: String, _ message: String?)
 }
 
-final class PokemonInfoViewModel: PokemonInfoViewProtocol {
-    private var coordinator: Coordinator
-    private var networkManager: NetworkManager
+final class PokemonInfoViewModel: PokemonInfoViewModelProtocol {
+    private var coordinator: CoordinatorProtocol
+    private var networkManager: Requestable
     private var coreDataManager: CoreDataManager
     weak var delegate: PokemonInfoViewModelDelegate?
     var pokemonInfo: PokemonInfoExtended? {
@@ -23,8 +22,8 @@ final class PokemonInfoViewModel: PokemonInfoViewProtocol {
     init(
         pokemon: Pokemon,
         coreDataManager: CoreDataManager,
-        networkManager: NetworkManager,
-        coordinator: Coordinator
+        networkManager: Requestable,
+        coordinator: CoordinatorProtocol
     ) {
         self.networkManager = networkManager
         self.coordinator = coordinator
@@ -39,7 +38,6 @@ final class PokemonInfoViewModel: PokemonInfoViewProtocol {
     func fetchPokemon(_ pokemon: Pokemon) {
         if let cached = self.getCachedPokemon(with: pokemon.name) {
             self.pokemonInfo = cached
-            print("DEB:Prop changer")
         } else {
             self.fetchPokemonInfo(pokemon) { [weak self] result in
                 guard let self else { return }

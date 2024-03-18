@@ -1,7 +1,7 @@
 import UIKit
 import SnapKit
 
-protocol ListViewProtocol {
+protocol PokemonListViewModelProtocol {
     var delegate: PokemonListViewModelDelegate? { get set }
     func pulledDown()
     func getPokemonsCount() -> Int
@@ -39,9 +39,9 @@ final class PokemonListViewController: UIViewController, PokemonListViewModelDel
         return spinner
     }()
 
-    private var viewModel: ListViewProtocol
+    private var viewModel: PokemonListViewModelProtocol
 
-    init(viewModel: ListViewProtocol) {
+    init(viewModel: PokemonListViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self

@@ -1,6 +1,6 @@
 import UIKit
 
-struct PokemonInfo: Codable {
+public struct PokemonInfo: Codable {
     var name: String
     var types: [PokemonType]
     var height: Int
@@ -8,7 +8,7 @@ struct PokemonInfo: Codable {
     var sprites: Sprite
 }
 
-struct Sprite: Codable {
+public struct Sprite: Codable {
     var front_default: URL?
 }
 

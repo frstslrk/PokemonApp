@@ -1,16 +1,16 @@
 import Foundation
 
-enum NetworkError: Error, LocalizedError {
-    
+public enum NetworkError: Error, LocalizedError {
     case invalidResponse(URLResponse?)
     case noDataReceived
     case invalidData(DecodingError)
     case noConnection
     case invalidRequest(Error)
     case timeout
+    case parseError
     case unknown(Error)
     
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .invalidResponse(_):
             return "Invalid response from server)"
@@ -26,7 +26,8 @@ enum NetworkError: Error, LocalizedError {
             return "Unknown error occurred"
         case .invalidRequest(_):
             return "Something wrong with our request, we will fix it "
+        case .parseError:
+            return "Data was not parsed in correct way !"
         }
-        
     }
 }

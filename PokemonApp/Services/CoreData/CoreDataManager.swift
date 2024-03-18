@@ -1,12 +1,18 @@
 import Foundation
 import CoreData
 
-final class CoreDataManager {
+public protocol CoreDataManager {
+    func getPokemonsFromList() -> [Pokemon]
+    func addPokemon(pokemonInfo: PokemonInfoExtended)
+    func getPokemon(name: String) -> PokemonInfoExtended?
+}
+
+final class PokemonCoreDataManager: CoreDataManager {
     private var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "CDPokemon")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
+                debugPrint("context not loaded")
             }
         })
         return container
@@ -17,7 +23,6 @@ final class CoreDataManager {
     }
     
     init() {}
-
     
     func getPokemonsFromList() -> [Pokemon] {
         getCachedPokemons().map({
@@ -38,8 +43,9 @@ final class CoreDataManager {
             try self.context.save()
         } catch {
             self.context.rollback()
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+
+            let nsError = error as NSError
+            debugPrint("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
     
@@ -55,7 +61,7 @@ final class CoreDataManager {
         }).first
     }
     
-    func getCachedPokemons() -> [CDPokemon]{
+    private func getCachedPokemons() -> [CDPokemon]{
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "CDPokemon")
         if let result = try? self.context.fetch(request) as? [CDPokemon] {
             return result

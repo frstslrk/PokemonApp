@@ -1,14 +1,20 @@
 import UIKit
 import CoreData
 
-final class Coordinator {
+protocol CoordinatorProtocol {
+    var navigationController: UINavigationController { get set }
+
+    func start()
+    func showPokemonDetails(pokemon: Pokemon)
+}
+
+final class Coordinator: CoordinatorProtocol {
     var navigationController: UINavigationController
-    var networkManager = NetworkManager()
-    var coreDataManager: CoreDataManager
-    
+    private let networkManager = PokemonNetworkManager()
+    private let coreDataManager = PokemonCoreDataManager()
+
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.coreDataManager = CoreDataManager()
     }
     
     func start() {
@@ -24,7 +30,8 @@ final class Coordinator {
         let viewModel = PokemonInfoViewModel(
             pokemon: pokemon,
             coreDataManager: coreDataManager,
-            networkManager: networkManager, coordinator: self)
+            networkManager: networkManager, 
+            coordinator: self)
         let controller = PokemonInfoViewController(viewModel: viewModel)
         self.navigationController.pushViewController(controller, animated: true)
     }

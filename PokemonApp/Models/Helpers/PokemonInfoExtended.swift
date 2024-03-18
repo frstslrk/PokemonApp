@@ -1,7 +1,7 @@
 import UIKit
 
-struct PokemonInfoExtended {
-    var name: String
+public struct PokemonInfoExtended {
+    public var name: String
     var types: [String]
     var height: Int
     var weight: Int
